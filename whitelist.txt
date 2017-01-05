@@ -1,0 +1,3 @@
+@r-
+@CONNECT BSC202
+rlsvi:CELL=C6003B,PSVTYPE=mcpaps;

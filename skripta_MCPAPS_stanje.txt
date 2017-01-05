@@ -1,0 +1,35 @@
+@GETDATE {date} YYMMDD
+@GETTIME {time} hhmm
+@LOG ON C:\LOGOVI\MCPAPS_{date}.log
+@clearf
+@for {ne}=1 to 9
+
+  @if {ne}=1 then @connect BSC06
+  @if {ne}=2 then @connect BSC101
+  @if {ne}=3 then @connect BSC102
+  @if {ne}=4 then @connect BSC11
+  @if {ne}=5 then @connect BSC201  
+  @if {ne}=6 then @connect BSC202
+  @if {ne}=7 then @connect BSC301
+  @if {ne}=8 then @connect BSC402
+  @if {ne}=9 then @connect BSC401
+
+
+c7spp:sp=ALL
+@getpar {bsc} SPID 
+  
+         rlsvp:CELL=ALL,PSVTYPE=MCPAPS;
+         @for {i}=1 to {_lines}-10
+             @getpar {celija} CELL {i}
+             @getpar {mcpaps} MCPAPS {i}
+             @getpar {mcpapshyst} MCPAPSHYST {i}
+             @getpar {minreqtch} MINREQTCH {i}
+             @addline {celija};{bsc};{mcpaps};{mcpapshyst};{minreqtch};;{date}_{time};
+         @next
+   
+               
+@next
+ @saveas "C:\xampp\htdocs\mcpaps\MCPAPS.csv"
+@LOG OFF
+
+
